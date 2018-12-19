@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partials/head.ejs %>
+
+    <title>가계부 생성</title>
+
+    <style type="text/css">
+        th {
+            text-align: left;
+            width: 30%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $('h3').append('이 아니고 가계부생성!!');
+        });
+
+        function showParentBook() {
+            if ($("#radio00").is(":checked")) {
+                console.log('hide()...');
+                $("#parentBook option:eq(0)").prop("selected", true);
+                $("#test").hide();
+                console.log('선택된 값 --> ' + $('#parentBook option:selected').val());
+            } else if ($("#radio01").is(":checked")) {
+                $("#test").show();
+                console.log('show()...');
+            }
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <h2>Board Project TEST</h2>
+
+    <div align="center">
+        <h3>회원가입</h3>
+        
+        <form action="createPro" method="POST">
+            <table style="width: 40%">
+                <tr>
+                    <th>가계부 타입</th>
+                    <td>
+                        <input type="radio" name="kinds" id="radio00" value="0" onclick="showParentBook();" >주가계부
+                        <input type="radio" name="kinds" id="radio01" value="1" onclick="showParentBook();" checked="checked">부가계부
+                    </td>
+                </tr>
+
+                <tr id="test">
+                    <th>가계부 선택</th>
+                    <td>
+                        <select id="parentBook" name="parentBook">
+                            <option value="0">선택</option>
+                            <% for(var key in list) { %>
+                            <option value="<%=list[key].bookNo %>"><%=list[key].bookName %></option>
+                            <% } %>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>가계부 이름</th>
+                    <td><input type="text" name="bookName" placeholder="가계부 이름" required="required"></td>
+                </tr>
+                <tr>
+                    <th>메모</th>
+                    <td><input type="text" name="memo" placeholder="가계부 설명"></td>
+                </tr>
+            </table>
+            <p>
+                <input type="submit" value="작성완료">
+                <input type="reset" value="다시작성">
+            </p>
+        </form>
+        <p><input type="button" value="돌아가기" onclick="location.replace('list')"></p>
+    </div>
+
+</body>
+
+</html>

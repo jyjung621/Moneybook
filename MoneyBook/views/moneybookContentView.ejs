@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partials/head.ejs %>
+
+    <title>가계부 생성</title>
+
+    <style type="text/css">
+        th {
+            text-align: left;
+            width: 30%;
+        }
+    </style>
+    <script type="text/javascript">
+        function deleteChk(bookNo, parentBook) {
+            $.ajax({
+                url : 'deleteChk',
+                type : "POST",
+                dataType : "json",
+                data : {
+                    bookNo : bookNo,
+                    parentBook : parentBook
+                },
+                beforeSend : function() {
+                    console.log("가계부 확인 전...");
+                },
+                complete : function() {
+                    console.log("가계부 확인 완료...!");
+                },
+                success : function(data) {
+                    console.log('data -> ' + data.cnt);
+                    if(data.cnt <= 1) {
+                        var check = confirm("삭제하시겠습니까?");
+                        if(check) { 
+                            location.replace('deletePro?bookNo=' + bookNo);
+                        }
+                    } else {
+                        var check = confirm("서브 가계부가 " + data.cnt + "개 존재합니다.\n삭제하시겠습니까?");
+                        if(check) { 
+                            location.replace('deletePro?parentBook=' + bookNo);
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Board Project TEST</h2>
+
+    <div align="center">
+        
+
+        <table style="width: 50%">
+            <tr>
+                <th>가계부 이름</th>
+                <td><h3><%=contents.bookName%></h3></td>
+            </tr>
+            <tr>
+                <th>메모</th>
+                <td><%=contents.memo%></td>
+            </tr>
+        </table>
+        <p align="right">
+            <input type="button" value="수정" onclick="location.replace('updateForm?bookNo=<%=contents.bookNo%>')">
+            <input type="button" value="삭제" onclick="deleteChk(<%=contents.bookNo%>, <%=contents.parentBook%>)">
+            <input type="button" value="삭제11" onclick="location.replace('deletePro?bookNo=<%=contents.bookNo%>')">
+            <input type="button" value="HOME" onclick="location.replace('list')">
+        </p>
+
+    </div>
+
+    <hr>
+
+    <h2>이곳은 가계부 내역이 들어올 예정....</h2>
+
+</body>
+
+</html>

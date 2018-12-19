@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%=title%>
+    </title>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!-- Header -->
+        <% include ../partials/header.ejs %>
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    <%=title %>
+                    <small>(알아서 만들어가는 곳)</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> 커뮤니티</a></li>
+                    <li class="active">
+                        <%=title%>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3>TEST</h3>
+                    </div>
+                    <div class="box-body">
+                        <form action="updateForm" method="POST">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>제목</th>
+                                    <td><%=board.title%></td>
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <td><%=board.content%></td>
+                                </tr>
+                                <tr>
+                                    <th>작성자</th>
+                                    <td><%=board.userId%></td>
+                                </tr>
+                                <tr>
+                                    <th>작성일</th>
+                                    <td><%=board.regDate%></td>
+                                </tr>
+                            </table>
+                            <button type="submit" class="btn btn-info">수정하기</button>
+                            <button type="button" class="btn btn-info" onclick="location.replace('list')">목록</button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Footer -->
+
+        <% include ../partials/footer.ejs %>
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+</body>
+
+</html>

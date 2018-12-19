@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partials/head.ejs %>
+
+    <title>가계부 생성</title>
+
+    <style type="text/css">
+        th {
+            text-align: left;
+            width: 30%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $(".typeSel").hide();
+        });
+        function toggleName() {
+            if ($('#moveBook').val() == '이동하기') {
+                $.ajax({
+                    url : 'parentSel',
+                    type : "POST",
+                    dataType : "json",
+                    data : {
+                    },
+                    beforeSend : function() {
+                        console.log("select 확인 전...");
+                    },
+                    complete : function() {
+                        console.log("select 확인 완료...!");
+                    },
+                    success : function(data) {
+                        let html = "<option value='<%=contents.parentBook%>'>선택</option>";
+                        for(var key in data) {
+                            console.log('data['+key+'] -> ' + data[key].bookName);
+                            html += "<option value='" + data[key].bookNo + "'>" + data[key].bookName + "</option>";
+                        }
+                        $('#parentBook').html(html);
+                        $('.typeSel').show();
+                        $('#moveBook').val('취소');
+                    }
+                });
+            } else if ($('#moveBook').val() == '취소') {
+                $('input:radio[name=newKinds]').prop("checked", false);
+                $("#parentBook option:eq(0)").prop("selected", true);
+                $('.typeSel').hide();
+                $('#moveBook').val('이동하기');
+            }
+        };
+
+        function showParentBook() {
+            if ($("#radio00").is(":checked")) {
+                console.log('hide()...');
+                $("#parentSel").hide();
+                console.log('선택된 값 --> ' + $('#parentBook option:selected').val());
+            } else if ($("#radio01").is(":checked")) {
+                $("#parentSel").show();
+                console.log('show()...');
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Board Project TEST</h2>
+
+    <div align="center">
+        <h3>가계부 수정</h3>
+
+        <form action="updatePro" method="POST">
+            <input type="hidden" name="bookNo" value="<%=contents.bookNo%>">
+            <input type="hidden" name="oldKinds" value="<%=contents.kinds%>">
+            <table style="width: 50%">
+
+                <tr>
+                    <th>가계부 이름</th>
+                    <td><input type="text" name="bookName" value="<%=contents.bookName%>" required="required"></td>
+                </tr>
+                <tr>
+                    <th>메모</th>
+                    <td><textarea name="memo"><%=contents.memo%></textarea></td>
+                </tr>
+                <tr>
+                    <th>가계부 이동</th>
+                    <td>
+                        <input type="button" id="moveBook" value="이동하기" onclick="toggleName()">
+                    </td>
+                </tr>
+                <tr class="typeSel">
+                    <th>가계부 타입</th>
+                    <td>
+                        <input type="radio" name="newKinds" id="radio00" value="0" onclick="showParentBook();">주가계부
+                        <input type="radio" name="newKinds" id="radio01" value="1" onclick="showParentBook();">부가계부
+                    </td>
+                </tr>
+                <tr id="parentSel" class="typeSel">
+                    <th>상위 가계부</th>
+                    <td>
+                        <select id="parentBook" name="parentBook">
+                            <option value='<%=contents.parentBook%>'>선택</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <input type="submit" value="수정완료">
+                <input type="reset" value="초기화">
+            </p>
+        </form>
+        <p><input type="button" value="돌아가기" onclick="location.replace('list')"></p>
+    </div>
+</body>
+
+</html>

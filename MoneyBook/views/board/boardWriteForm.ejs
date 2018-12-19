@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%=title%>
+    </title>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!-- Header -->
+        <% include ../partials/header.ejs %>
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    <%=title %>
+                    <small>(알아서 만들어가는 곳)</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> 커뮤니티</a></li>
+                    <li class="active">
+                        <%=title%>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3>TEST</h3>
+                    </div>
+                    <div class="box-body">
+                        <form action="writePro" method="POST">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>제목</th>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="title">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <td>
+                                        <div class="box">
+                                            <div class="box-header">
+                                                <h3 class="box-title">CK Editor(이건나중에 고치기로)
+                                                    <small>Advanced and full of features</small>
+                                                </h3>
+                                            </div>
+                                            <!-- /.box-header -->
+                                            <div class="box-body pad">
+                                                <form>
+                                                    <textarea id="editor1" name="editor1" rows="10" cols="80"
+                                                        placeholder="This is my textarea to be replaced with CKEditor."></textarea>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- /.box -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>작성자</th>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="memberId" value="<%= nickname %>"
+                                                disabled>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <button type="submit" class="btn btn-info">작성완료</button>
+                            <button type="button" class="btn btn-info" onclick="location.replace('list')">취소</button>
+                        </form>
+                    </div>
+                </div>
+                
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Footer -->
+
+        <% include ../partials/footer.ejs %>
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    <script>
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('editor1')
+        })
+    </script>
+</body>
+
+</html>

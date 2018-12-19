@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Registration Page</title>
+  <% include ../partials/head.ejs %>
+</head>
+
+<body class="hold-transition register-page">
+  <div class="register-box">
+    <div class="register-logo">
+      <a href="/"><b>Money</b>Book</a>
+    </div>
+    <!-- /.login-logo -->
+
+    <div class="register-box-body">
+      <!-- 회원가입 머릿글 -->
+      <p class="login-box-msg">Register a new membership</p>
+
+      <!-- 회원가입 Form start -->
+      <form action="joinPro" method="POST">
+        <!-- 닉네임 -->
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="nickName" placeholder="NickName">
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <!-- 이메일 -->
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" name="memberId" placeholder="Email">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <!-- 비밀번호 -->
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" name="passwd" placeholder="Password">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <!-- 비밀번호 확인 (비교 작업 추가 예정) -->
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" name="passwdRetype" placeholder="Retype password">
+          <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+        <!-- 연락처 -->
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="telNum" placeholder="Phone Number"
+            data-inputmask='"mask": "999-9999-9999", "999-999-9999"' data-mask>
+          <span class="glyphicon fa fa-mobile-phone form-control-feedback"></span>
+        </div>
+        <!-- /.input group -->
+
+        <!-- 동의 체크 및 가입 버튼 -->
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="checkbox ichec">
+              <label>
+                <input type="checkbox"> I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+      <!-- /.form -->
+
+      <!-- 다른 방식으로 회원가입 -->
+      <div class="social-auth-links text-center">
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up
+          using Google+</a>
+      </div>
+
+      <a href="loginForm">로그인하기</a>
+    </div>
+  </div>
+
+</body>
+
+</html>
