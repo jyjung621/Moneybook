@@ -33,14 +33,13 @@ router.post('/loginPro', (request, response) => {
             console.log('loginPro select error : ' + err);
             throw err;
         }
-        // console.log('rs --> ' + rs[0]);
-        if(!rs[0]) {
+        if(!memberInfo[0]) {
             console.log('회원 정보 없음...');
             return response.render('member/loginForm.ejs', {
                 message : "로그인 실패(회원정보 없음)" 
             });
         } else {
-            if(body.passwd === rs[0].passwd) {
+            if(body.passwd === memberInfo[0].passwd) {
                 console.log('로그인... 성공!!');
                 /* db.query("select * from moneybook where userId=?",[memberInfo[0].memberId], (err2, bookList) => {
                     if(err2) {

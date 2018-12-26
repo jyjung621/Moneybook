@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/head.ejs %>
+  <title>BasicForm</title>
+  <script>
+    $(document).ready(function() {
+      $('#CUFormModal').on('show.bs.modal', function (event) {
+          console.log('-------test Start--------');
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var data = button.data('path') // Extract info from data-* attributes
+          
+          var modal = $(this);
+          if(data === 'create') {
+            $("#frm").attr("action", "/payment/createPro");
+            $('#paymentNo').val('0');
+            $('#userId').val('<%=userId%>');
+            // $('input:radio[name=kinds]').val('0').attr('checked', true);
+            // $("input:radio[name='kinds']:input[value='0']").prop("checked", true);
+            $('#paymentName').val('');
+            $('#company').val('');
+            $('#payDate').val('1');
+            $('#account').val('');
+            modal.find('.modal-title').text('결제수단 추가');
+          } else {
+            $("#frm").attr("action", "/payment/updatePro");
+            modal.find('.modal-title').text('결제수단 수정');
+          }
+          console.log('button value -> ' + data);
+
+      });
+      $('#CUFormModal').on('hidden.bs.modal', function (event) {
+          console.log('닫힙');
+          location.reload();
+        });
+    });
+
+    function openModal(data) {
+      var payment = JSON.parse(data);
+      // console.log('openModal data -> ' + JSON.stringify(payment));
+      // console.log('openModal data0 -> ' + data.toString());
+      console.log('openModal data1 -> ' + data);
+      // console.log('openModal data2 -> ' + payment.paymentName);
+
+      $('#paymentNo').val(payment.paymentNo);
+      $('#paymentName').val(payment.paymentName);
+      $('#userId').val(payment.userId);
+      $('#company').val(payment.company);
+      // $("input:radio[name='kinds']").val(payment.kinds).prop("checked", true);
+      $('#payDate').val(payment.payDate);
+      $('#account').val(payment.account);
+      $('#CUFormModal').modal('show');
+      
+    }
+   
+  </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <!-- Header -->
+    <% include ../partials/header.ejs %>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          결제수단 관리
+          <small>(결제수단 추가, 수정, 삭제 가능)</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+          <li class="active">Here</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content container-fluid">
+        
+        <div class="box">
+          <div class="box-header with-border">
+            
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#CUFormModal" data-path="create">
+                결제수단 추가
+            </button>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered text-center">
+                <tr>
+                  <th>#</th>
+                  <th>이름</th>
+                  <th>종류</th>
+                  <th>기관이름</th>
+                  <th>결제일</th>
+                  <th>결제계좌</th>
+                </tr>
+                <% for(var key=0; key<list.length; key++) { %>
+                  <tr>
+                    <td><%=key+1%></td>
+                    <!-- <td><button type="button" onclick='openModal(`<%=JSON.stringify(list[key])%>`)'><%=list[key].paymentName%></button></td> -->
+                    <td><a href="javascript:openModal(`<%=JSON.stringify(list[key])%>`)"><%=list[key].paymentName%></a></td>
+                    <!-- <td><a data-toggle="modal" href="#CUFormModal" data-whatever='<%=JSON.stringify(list[key])%>'><%=list[key].paymentName%></a></td> -->
+                    <td><%=list[key].kinds%></td>
+                    <td><%=list[key].company%></td>
+                    <td><%=list[key].payDate%></td>
+                    <td><%=list[key].account%></td>
+                  </tr>
+                <% } %>
+            </table>
+          </div>
+        </div>
+  
+        <!-- Modal [ Create & Update Form ] -->
+        <div class="modal fade" id="CUFormModal" tabindex="-1" role="dialog" aria-labelledby="CUFormModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="CUFormModalLabel">결제수단 수정</h4>
+                </div>
+              <form action="/payment/test-btn1" id="frm" method="post">
+                <div class="modal-body">
+                  <input type="hidden" name="paymentNo" id="paymentNo" value="" placeholder="번호">
+                  <input type="hidden" name="userId" id="userId" value="">
+                  <table class="table table-bordered">
+                    <tr>
+                      <th style="width: 80px">이름</th>
+                      <td><input type="text" name="paymentName" id="paymentName" required></td>
+                    </tr>
+                    <tr>
+                      <th>종류</th>
+                      <td>
+                        <input type="radio" name="kinds" value="0" required>현금 
+                        <input type="radio" name="kinds" value="1">통장
+                        <input type="radio" name="kinds" value="2">계좌
+                        <input type="radio" name="kinds" value="3">카드
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>기관이름</th>
+                      <td><input type="text" name="company" id="company"></td>
+                    </tr>
+                    <tr>
+                      <th>결제계좌</th>
+                      <td><input type="text" name="account" id="account"></td>
+                    </tr>
+                    <tr>
+                      <th>결제일</th>
+                      <td>
+                          <select name="payDate" id="payDate">
+                          <% for(var i=1; i<=31; i++) { %>
+                            <option value="<%=i%>"><%=i%>일</option>
+                          <% } %>
+                          </select>  
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Footer -->
+    <% include ../partials/footer.ejs %>
+    <div class="control-sidebar-bg"></div>
+  </div>
+
+</body>
+
+</html>

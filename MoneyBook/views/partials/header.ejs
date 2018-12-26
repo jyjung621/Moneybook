@@ -2,11 +2,11 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="index2.html" class="logo">
+  <a href="/home" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>A</b>LT</span>
+    <span class="logo-mini"><b>B</b>ook</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>Admin</b>LTE</span>
+    <span class="logo-lg"><b>Money</b>Book</span>
   </a>
 
   <!-- Header Navbar -->
@@ -224,10 +224,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><%=bookList[i].bookName%></a></li>
+            <li><a href="/book/contentView?bookNo=<%=bookList[i].bookNo%>"><%=bookList[i].bookName%></a></li>
             <% for(var j in bookList) { %>
               <% if(bookList[j].kinds == 1 && bookList[i].bookNo == bookList[j].parentBook) { %>
-              <li><a href="#"><%=bookList[j].bookName%></a></li>
+              <li><a href="/book/contentView?bookNo=<%=bookList[j].bookNo%>"><%=bookList[j].bookName%></a></li>
               <% } %>
             <% } %>
           </ul>
@@ -262,6 +262,8 @@
         <!-- Optionally, you can add icons to the links -->
         <li><a href="#"><i class="fa fa-link"></i> <span>회원정보수정</span></a></li>
         <li><a href="/book/list"><i class="fa fa-link"></i> <span>가계부관리</span></a></li>
+        <li><a href="/payment/list"><i class="fa fa-link"></i> <span>결제수단관리</span></a></li>
+        <li><a href="/category/list"><i class="fa fa-link"></i> <span>카테고리관리</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>추가예정</span>
             <span class="pull-right-container">

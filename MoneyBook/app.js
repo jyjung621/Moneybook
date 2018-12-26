@@ -20,6 +20,8 @@ var boardRouter = require('./routes/board');
 var memberRouter = require('./routes/member');
 var homeRouter = require('./routes/home');
 var bookRouter = require('./routes/book');
+var paymentRouter = require('./routes/payment');
+var categoryRouter = require('./routes/category');
 
 
 
@@ -53,6 +55,7 @@ app.use(function(req, res, next) {
     res.locals.bookList = req.session.bookList;
   } else {
     res.locals.is_logined = undefined;
+    res.locals.userId = undefined;
     res.locals.nickname = undefined;
     res.locals.grade = undefined;
     res.locals.phone = undefined;
@@ -65,6 +68,8 @@ app.use('/board', boardRouter);
 app.use('/member', memberRouter);
 app.use('/home', homeRouter);
 app.use('/book', bookRouter);
+app.use('/payment', paymentRouter);
+app.use('/category', categoryRouter);
 
 
 
