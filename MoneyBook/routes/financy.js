@@ -6,8 +6,6 @@ var ejs = require('ejs');
 var db = require('../lib/db');
 var bodyParser = require('body-parser');
 
-// var md = require('../lib/memberDao');
-
 
 app.engine('ejs', ejs.renderFile);
 router.use(bodyParser.json());
@@ -40,18 +38,6 @@ router.get('/list', (request, response) => {
 
 });
 
-// router.get('/createForm', (request,response) => {
-//     db.query("select * from moneybook where kinds='0' and userId=?", [request.session.userId], (err, rs) => {
-//         if(err) {
-//             console.log('/book/createForm error : ' + err);
-//             throw err;
-//         }
-//         response.render('moneybookCreateForm.ejs', {
-//             list : rs,
-//         });
-//     });
-// });
-
 router.post('/createPro', (request, response) => {
     var body = request.body;
     var session = request.session;
@@ -76,7 +62,7 @@ router.post('/createPro', (request, response) => {
         response.redirect('list');
     });
 });
-
+/* 
 router.get('/contentView', (request, response) => {
     var str = request.query;
     var sql = "select * from moneybook where bookNo=? and userId=?";
@@ -100,20 +86,6 @@ router.get('/contentView', (request, response) => {
     });
 });
 
-// router.get('/updateForm', (request, response) => {
-//     var str = request.query;
-//     var sql = "select * from moneybook where bookNo=? and userId=?";
-
-//     db.query(sql, [str.bookNo, request.session.userId], (err, rs) => {
-//         if(err) {
-//             console.log('/book/deleteChk error -> ' + err);
-//             throw err;
-//         }
-//         response.render('moneybookUpdateForm.ejs', {
-//             contents : rs[0]
-//         });
-//     });
-// });
 
 router.post('/parentSel', (request, response) => {
     db.query("select * from moneybook where kinds='0' and userId=?", [request.session.userId], (err, rs) => {
@@ -224,6 +196,6 @@ router.get('/deletePro', (request, response) => {
         }
         response.redirect('list');
     });
-});
+}); */
 
 module.exports = router;

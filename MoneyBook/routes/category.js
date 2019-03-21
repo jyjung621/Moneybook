@@ -19,44 +19,43 @@ router.get('/', (request, response) => {
 });
 
 router.get('/list', (request, response) => {
-    var sql = "select * from payment where userId=? order by kinds, paymentName";
-    // db.query(sql, [request.session.userId], (err, rs) => {
-    //     if(err) {
-    //         console.log('paymentList error : ' + err);
-    //         throw err;
-    //     }
-    //     response.render('payment/paymentList.ejs', {
-    //         message : "",
-    //         list : rs
-    //     });
-    // });
+    var sql = "select * from category where userId=?";
+    db.query(sql, [request.session.userId], (err, rs) => {
+        if(err) {
+            console.log('categoryList error : ' + err);
+            throw err;
+        }
+        response.render('category/categoryList.ejs', {
+            message : "",
+            list : rs
+        });
+    });
 });
 
 router.post('/createPro', (request, response) => {
     var body = request.body;
-    var sql = "insert into payment (paymentNo, userId, paymentName, kinds, company, account, payDate) \
-            values (fn_maxTablenum('payment',?),?,?,?,?,?,?)";
-    
-            // db.query(sql,[body.userId, body.userId, body.paymentName, body.kinds, body.company, body.account, body.payDate], (err,rs) => {
-            //     if(err){
-            //         console.log('payment createPro error : ' + err);
-            //         throw err;
-            //     }
-            //     response.redirect('list');
-            // });
+    var sql = "insert into category (categoryNo, userId, name, kinds) \
+            values (fn_maxTablenum('category',?),?,?,?)";
+    db.query(sql,[body.userId, body.userId, body.name, body.kinds], (err,rs) => {
+        if(err){
+            console.log('category createPro error : ' + err);
+            throw err;
+        }
+        response.redirect('list');
+    });
 });
 
 router.post('/updatePro', (request, response) => {
     var body = request.body;
-    var sql = "update payment set paymentName=?, kinds=?, company=?, account=?, payDate=? where paymentNo=? and userId=?";
+    var sql = "update category set name=?, kinds=? where categoryNo=? and userId=?";
     console.log('updatePro data -> ' + JSON.stringify(body));
-    // db.query(sql, [body.paymentName, body.kinds, body.company, body.account, body.payDate, body.paymentNo, body.userId], (err, rs) => {
-    //     if(err) {
-    //         console.log('paymentUpdatePro error : ' + err);
-    //         throw err;
-    //     }
-    //     response.redirect('list');
-    // });
+    db.query(sql, [body.name, body.kinds, body.categoryNo, body.userId], (err, rs) => {
+        if(err) {
+            console.log('categoryUpdatePro error : ' + err);
+            throw err;
+        }
+        response.redirect('list');
+    });
 });
 
 // router.post('/test-btn1', (request, response) => {

@@ -22,6 +22,7 @@ var homeRouter = require('./routes/home');
 var bookRouter = require('./routes/book');
 var paymentRouter = require('./routes/payment');
 var categoryRouter = require('./routes/category');
+var financyRouter = require('./routes/financy');
 
 
 
@@ -70,7 +71,7 @@ app.use('/home', homeRouter);
 app.use('/book', bookRouter);
 app.use('/payment', paymentRouter);
 app.use('/category', categoryRouter);
-
+app.use('/financy', financyRouter);
 
 
 
@@ -83,6 +84,11 @@ app.use(function (request, response, next) {
   response.status(404).send('Sorry cant find that!');
 });
 
+// 잘못된 요청이 들어올 경우
+app.use(function (request, response, next) {
+  response.status(405).send('Sorry Invalid request!');
+});
+
 // error handler 내가 원하는 방식으로 꾸미기
 app.use(function (err, request, response, next) {
   console.log(err);
@@ -91,7 +97,7 @@ app.use(function (err, request, response, next) {
 
 
  /****************************************************************************************** 
- *  listen
+ *  listen (서버 시작)
  ******************************************************************************************/
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 app.listen(port, function () {
