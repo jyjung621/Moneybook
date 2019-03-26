@@ -246,15 +246,43 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-sm-6" style="background-color: skyblue">
-                      <input type="hidden" name="bookNo" id="bookNo" value="" placeholder="번호">
+                      <input type="hidden" name="financyNo" id="financyNo" value="">
                       <input type="hidden" name="userId" id="userId" value="">
-                      <input type="hidden" name="oldBookName" id="oldBookName" value="">
-                      <input type="hidden" name="oldKinds" id="oldKinds" value="">
-                      <input type="hidden" name="oldParentBook" id="oldParentBook" value="">
+                      <!-- <input type="hidden" name="bookName" id="bookName" value=""> -->
                       <table class="table table-bordered">
                         <tr>
                           <th>가계부 이름</th>
-                          <td><input type="text" name="bookName" id="bookName" required="required"></td>
+                          <td>
+                            <select name="bookName" id="bookName">
+                              <% for(var i=0; i<bookList.length; i++) { %>
+                                <option value="<%=bookList[i].bookName%>" <% if(bookList[i].bookName == content.bookName) { %> selected <% } %>><%=bookList[i].bookName%></option>
+                              <% } %>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr">
+                          <th>종류</th>
+                          <td>
+                            <input type="radio" name="isIncome" id="isIncome00" value="0" checked>수입
+                            <input type="radio" name="isIncome" id="isIncome01" value="1">지출
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>DATE</th>
+                          <td>
+                            <!-- Date -->
+                            <div class="form-group">
+                              <!-- <label>Date:</label> -->
+                              <div class="input-group date">
+                                <div class="input-group-addon">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" id="datepicker">
+                              </div>
+                              <!-- /.input group -->
+                            </div>
+                            <!-- /.form group -->
+                          </td>
                         </tr>
                         <tr>
                           <th>메모</th>
@@ -307,5 +335,11 @@
   </div>
 
 </body>
+
+<script>
+    $('#datepicker').datepicker({
+    autoclose: true
+    })
+</script>
 
 </html>

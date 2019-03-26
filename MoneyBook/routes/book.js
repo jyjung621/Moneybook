@@ -80,7 +80,6 @@ router.post('/createPro', (request, response) => {
 router.get('/contentView', (request, response) => {
     var str = request.query;
     var sql = "select * from moneybook where bookNo=? and userId=?";
-
     db.query(sql, [str.bookNo, request.session.userId], (err, bookInfo) => {
         if (err) {
             console.log('/book/contentView error -> ' + err);
