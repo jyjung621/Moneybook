@@ -62,6 +62,7 @@ router.post('/createPro', (request, response) => {
         response.redirect('list');
     });
 });
+
 /* 
 router.get('/contentView', (request, response) => {
     var str = request.query;
